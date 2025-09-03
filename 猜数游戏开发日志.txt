@@ -46,8 +46,8 @@
 
 
 			/* 2024-12-27-5 */
-   (4)可以询问玩家是否需要提示(输入的数较大/较小) OR 只需按特点按键/输入特定值即可提示
-   (5)只需按特点按键/输入特定值即可提前退出游戏
+   (4)可以询问玩家是否需要提示(输入的数较大/较小) OR 只需按特定按键/输入特定值即可提示
+   (5)只需按特定按键/输入特定值即可提前退出游戏
 
 1.Project Progress & Improvements
   (5)引入2个结构体
@@ -214,7 +214,7 @@
 
 
 		/* 2025-2-7-5 */
-  (26)继续增加、完善函数,基本完成V2.0.0的开发,只差轮回模式(变量模式)的对话完善--甚至不消补充完,因为用抖的概率太小
+  (26)继续增加、完善函数,基本完成V2.0.0的开发,只差轮回模式(变量模式)的对话完善--甚至不用补充完,因为用到的概率太小
   (27)推出V1.0.0公测版
 
 
@@ -223,7 +223,7 @@
 2.Debug & Check
   (8)修改void hint_getreply( char *reply, int degree ),把char *reply改为char  **reply才可以修改调用者所在函数的reply
     同理还有void hint_get_replyadd( char *reply_add, int degree )
-    修改后甚至[Warning] parameter 'reply'以及'reply_add' set but not used [-Wunused-but-set-parameter]都没得了
+    修改后甚至[Warning] parameter 'reply'以及'reply_add' set but not used [-Wunused-but-set-parameter]都没有了
 
 
 
