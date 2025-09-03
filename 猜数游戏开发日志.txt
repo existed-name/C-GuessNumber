@@ -1,0 +1,231 @@
+    /* 年-月-日-星期 */
+    Modules Of Log(日志模块) 
+1.Project Progress & Improvements(项目进程&调整)
+2.Debug & Check(调试&检查)
+3.Project Schedule(项目规划)
+4.Memorial & Stage(重要节点&新征程)
+
+
+
+			/* 2024-12-21-6 */
+1.Project Progress & Improvements
+  (1)写好猜数游戏基本main函数框架
+      创造数据 → 读入数据 → 判断是否匹配 → 统计猜数次数 → 循环 → 输出每次猜测的结果
+  (2)预设了一些功能函数用以实现部分功能
+      ①intro函数:介绍游戏及使用方法
+      ②num_create函数:获取要猜的目标数(10以内)
+      ③guess_false函数:新的想法 -> 不同的猜错次数对应不同的输出语句
+
+
+
+			/* 2024-12-22-7 */
+  (3)完善(2)中①②③函数,主要在于对③的补充,并且会判断玩家是否有恶意游戏(乱输入)的情况并进行终止游戏处理(缺点是使用了goto out)
+  (4)调整了一些输出格式,比如一些语句空4格输出
+
+4.Memorial & Stage
+  (1)完工猜数游戏(C语言)V0.9.0.20241221_Alpha版本,进入V1.0.0版本开发阶段
+      V0.9.0版本无注释源码(含序言)已保存
+
+2.Debug & Check
+  (1)对guess_false函数中switch-case修订,修订了错误次数为1与输出语句不匹配的bug
+
+
+
+			/* 2024-12-23-1 */
+  (2)稳妥起见,将guess_false函数中用于容纳输出语句的字符指针变量words初始化为空指针
+  (3)为了便于展示变量代表意义,将变量num改名为guess_num(要猜的数)
+
+4.Memorial & Stage
+  (2)开始撰写开发日志
+
+3.Project Schedule
+  (1)放弃main函数中while(1)循环,改写成while( temp != num ),并封装成函数judge( int temp, int num )
+  (2)V0.9.0只能进行一次游戏,可以在main函数中引用for(或while)循环,每轮for循环调用一次judge函数代表一次游戏的进行;每进行一次游戏后询问玩家是否再来 
+  (3)战绩记录,用1个结构体记录玩家每次游戏猜数次数、目标数、猜对次数(游戏胜利次数)、恶意游戏次数、for循环结束时总共游戏次数
+
+
+
+			/* 2024-12-27-5 */
+   (4)可以询问玩家是否需要提示(输入的数较大/较小) OR 只需按特点按键/输入特定值即可提示
+   (5)只需按特点按键/输入特定值即可提前退出游戏
+
+1.Project Progress & Improvements
+  (5)引入2个结构体
+    record,装目标数(从guess_num改为target_num)、每轮游戏猜数次数
+    record2装游戏回合、猜对次数、违规(捣乱)次数
+    之所以不放同一个结构体里头是为了俭省一点内存——定义了一个record类型的数组rcd,它只用装每一轮游戏的目标数、猜数次数就够了,而另外一个record2类型的结构体变量rcd2存全局的回合数、猜对次数、捣乱次数
+    By the way,rcd数组直接定义的rcd[100],容量固定,但足够用,二天可以用可变数组改进以调整内存分配
+  (6)调整main函数内容,由一个for循环控制游戏次数,配合各个函数板块完成整体功能
+  (7)新建函数
+      ①rcd_init( int i )用来初始化所有结构体成员
+      ②guess_judge( int i, int target)用这个函数实现每轮游戏的猜数、评测功能,配合for循环可多轮游戏 + 1轮游戏多次猜数
+      ③if_continue( void )在每轮游戏结束时询问玩家是否继续,其返回值传回main函数中的for循环判断是否退出游戏(终止程序)
+      ④grade_show( void )退出游戏后展示玩家所进行的每轮游戏战绩
+      
+
+
+			/* 2024-12-28-6 */
+  (8)输出语句中,为了合适的首行缩进,采用输出4个空格的策略(\t在终端中看起来太长),为了便于管理,将4个空格都用宏"4space"替换
+  (9)补充grade_show函数内容
+  (10)引入宏SEP_LINE用于作分割线,分割每轮游戏
+  (11)通过试玩对输出格式微调(补充BLANK4或者\t)
+  (12)调整日志样式
+      ①设置4个日志模块:
+      ※Project Progress & Improvements(项目进程&调整)
+      ※Debug & Check(调试&检查)
+      ※Project Schedule(项目规划)
+      ※Memorial & Stage(重要节点&新征程)
+      ②规定各级标题首行缩进空格数,
+				/* 日期,缩进2个tab键 */
+		1.一级标题,不空格,紧靠左边
+		  (2)二级标题,缩进2个空格
+		      ③三级标题,缩进6个空格
+      ③相邻2个一级标题间隔1行,相邻日期的内容间隔3行
+
+2.Debug & Check
+  (3)guess_num又改为target_num并放在record结构体中
+  (4)#define 4space "    "
+      编译器报错,[Error] macro names must be identifiers
+      将4space改为space4后程序正常运行 => 命名必须以字母开头
+      因为space可能又歧义,并且宏通常大写,所以又改为BLANK4
+
+4.Memorial & Stage
+  (2)猜数游戏(C语言)V1.0.0.20241228_Alpha版本完工,为1.0后续新版本开发奠定基座
+      V1.0.0版本无注释源码已保存
+
+
+
+		/* 2024-12-29-7 */
+3.Project Schedule
+  (6)添加游戏模式玩法
+      经典模式:给出[0,10]进行范围内整数猜测
+      挑战模式:限定猜数次数
+      提示模式:在常规模式基础上根据输入数提示玩家输入的数大了还是小了
+      刷题模式:给出题目,让玩家求解
+      字符模式:不止猜数,可以选择猜字母甚至标点符号
+      双人模式:顾名思义
+      变数模式:每猜错一次,目标数会改变,并且改变后还可能跟原来一样,于是不太适合排除法 => 靠运气
+
+
+
+		/* 2025-1-2-4 */
+  (7)把源代码分成几个文件(主要是把函数分出去),组成一个项目,要用的时候调用头文件
+  
+
+
+		/* 2025-1-3-5 */
+2.Debug & Check
+  (5)srand()函数原型void srand (unsigned int seed);
+    time()函数原型time_t time(time_t* timer);
+    将num_create()函数中srand( time( 0 ) )修改为srand( (unsigned int) time( NULL ) )更符合函数参数的类型要求,虽然其实大差不差
+    
+
+
+    		/* 2025-1-5-7 */
+1.Project Progress & Improvements
+  (13)新规定:
+    每一次优化、改bug,需要修改版本号(V x.y.z.date.string ,让z+1,并且date修改为当天日期)
+    版本号学习 -> https://blog.csdn.net/qq_29974981/article/details/121008029
+  (14)打草稿ing
+    进行游戏模式选择功能的开发,目前只考虑经典、提示、挑战、变数模式
+    草稿代码完工后需要修改V1.0.0的intro()函数,以配合各种模式的介绍、选择、选择后的操作
+
+
+
+		/* 2025-1-6-1 */
+  (15)继续开发模式选择功能
+    mode_intro()用于介绍不同模式,mode_select()用于让用户选择模式,并跳到相应的函数进行play
+    在草稿里面建了个main函数,以调用mode_intro()、mode_select()函数
+    在main的for循环内使用的swtich-case语句,用以根据mode_select()的返回值,用结构体成员记录本轮游戏所选择的模式
+
+
+
+		/* 2025-1-12-7 */
+  (16)声明了一些函数原型
+    充当程序框架的函数以及用作猜数功能的函数
+    只需先列出要用到的函数原型,后来补函数定义——把目标游戏分解成多个板块,每个板块由特定函数负责,再完善这些函数的代码,最后把这些代码拼起来即可
+2.Debug & Check
+  (6)编译报错
+    undefined reference to `mode_select',出错代码switch( mode_select() )
+    改为int option = mode_select(); swtich( option )后依然报错undefined reference to `mode_select'
+    排查后发现,mode_select()函数声明跟定义的名字不一样,定义的名字为mode_selct()
+    将其定义的名字修改为mode_select()后,编译仍然报错,[Error] 'mode_select' declared as function returning a function
+    原来是写成mode_select()( void )了
+    修改后正常运行
+
+
+
+		/* 2025-1-13-1 */
+1.Project Progress & Improvements
+  (17)拟定2部分函数
+      ①充当程序框架的函数
+      void mode_intro( void );
+      void rcd_initial( int i );
+      int mode_select( int i );
+      int num_create( void );
+      int if_continue( void );
+      void grade_show( void );
+      ②用作猜数功能的函数
+      void classic_mode( int i );
+      void classic_judge( int i, int target );
+      int classic_reply( int guess_cnt );
+      void hint_mode( int i );
+      void hint_judge( int i, int target );
+      void challenge_mode( int i );
+      void variable_mode( int i );
+      并补充了部分函数的代码(从V1.0.0搬过来、现写)
+
+
+
+		/* 2025-1-14-2 */
+  (18)选择"每1轮游戏,选择1次模式"而不是"每选择1次模式,进行多轮游戏"的开发方向
+
+
+
+		/* 2025-2-2-7 */
+  (19)基本确定用到的结构体、结构体成员
+  (20)将模式名称及介绍拆成了2个字符指针数组modename和modeintro
+  (21)完善mode_intro(),rcd_initial(),mode_select(),grade_show()等框架函数
+
+
+
+		/* 2025-2-3-1 */
+  (22)完善classic_mode(),hint_mode(),hint_judge(),challenge_mode()函数,修订classic_judge()函数
+
+
+
+		/* 2025-2-4-2 */
+  (23)补充并完善challenge_setlimit(),challenge_ifguide(),challenge_judge1(),challenge_judge2()函数
+  (24)修改hint_judge()函数,本人认为用字符指针数组装下多串文字,再统一赋给指针变量,似乎比直接if-else或者switch-case分别单独赋值要好 => 类似单一出口原则,并且可以减小代码量。
+    再出于简化单个函数的考虑,于是就从hint_judge()中剥离出hint_getdegree(),hint_getreply(),hint_get_replyadd()函数
+
+2.Debug & Check
+  (7)关于"violation",violate/violation有"违规"之意,而foul有"犯规"之意
+    通常在体育类游戏中使用"犯规"(commit a foul),而在电子游戏或在线游戏中,可能会更多地使用"违规"(violate game rules)
+    此处仍然保留violation,不改为foul
+    不过将if_violation改为if_violate
+
+
+
+		/* 2025-2-5-3 */
+1.Project Progress & Improvements
+  (25)增加challenge_godfavor()函数以补充隐藏玩法,增强可玩性
+
+
+
+		/* 2025-2-7-5 */
+  (26)继续增加、完善函数,基本完成V2.0.0的开发,只差轮回模式(变量模式)的对话完善--甚至不消补充完,因为用抖的概率太小
+  (27)推出V1.0.0公测版
+
+
+
+		/* 2025-2-9-7 */
+2.Debug & Check
+  (8)修改void hint_getreply( char *reply, int degree ),把char *reply改为char  **reply才可以修改调用者所在函数的reply
+    同理还有void hint_get_replyadd( char *reply_add, int degree )
+    修改后甚至[Warning] parameter 'reply'以及'reply_add' set but not used [-Wunused-but-set-parameter]都没得了
+
+
+
+		/* 2025-3-7-5 */
+system("pause");//"请按任意键继续。。。"
