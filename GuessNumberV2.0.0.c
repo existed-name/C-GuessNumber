@@ -1,3 +1,4 @@
+/*	猜数游戏V2.0.0.20250207_Alpha	*/
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -7,7 +8,7 @@
 #define BLANK4 "    "
 #define SEP_LINE "--------------------------------"
 
-//模式选择:经典(1),提示(2),挑战(3),轮回(4)(原变量),
+//模式选择:经典(1),提示(2),挑战(3),轮回(4)(原变量模式),
 enum MODE { Classic_Mode = 1, Hint_Mode, Challenge_Mode, Samsara_Mode, };
 //使用枚举是为了在switch-case时避免用magic digit,而提高可读性
 char *modename[] = {
